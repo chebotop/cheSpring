@@ -1,16 +1,14 @@
 package ru.firstapp.controller;
 
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.firstapp.model.Student;
 import ru.firstapp.service.StudentService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/student")
+@RequestMapping("/api/v1/students")
 @AllArgsConstructor
 public class StudentController {
     private final StudentService service;
@@ -18,5 +16,28 @@ public class StudentController {
     @GetMapping
     public List<Student> findAllStudent() {
         return service.findAllStudent();
+    }
+
+    @PostMapping("save_student")// сделать метод POST
+    // чтобы string могла реализовать указанный обьект, добавим @RequestBody
+    public String saveStudent(@RequestBody Student student) {
+        service.saveStudent(student);
+        return "Student successfully saved";
+    }
+
+    @GetMapping("/{email}")    // используем URL адрес для получения почты
+    // используем аннотацию для извлечения переменной из URL-запроса и передачи в метод контроллера как параметра
+    public Student findByEmail(@PathVariable String email) { // имя получаемой переменной и название в фигурных скобках совпадают
+        return service.findByEmail(email);
+    }
+
+    @PutMapping("update_student")
+    public Student updateStudent(Student student) {
+        return service.updateStudent(student);
+    }
+
+    @DeleteMapping("delete_student/{email}")
+    public void deleteStudent(@PathVariable String email) {
+        service.deleteStudent(email);
     }
 }

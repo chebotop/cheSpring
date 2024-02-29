@@ -10,9 +10,8 @@ import java.util.stream.IntStream;
 @Repository
 public class InMemoryStudentDAO {
     private final List<Student> STUDENTS = new ArrayList<>();
-
     public List<Student> findAllStudent() {
-        return null;
+        return new ArrayList<>(STUDENTS);
     }
     public Student saveStudent(Student student) {
         STUDENTS.add(student);
