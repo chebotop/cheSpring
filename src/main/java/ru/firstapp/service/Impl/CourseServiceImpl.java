@@ -20,6 +20,10 @@ public class CourseServiceImpl implements CourseService {
     public Course findCourseById(Long id) {
         return repository.findCourseById(id);
     }
+    @Override
+    public List<Course> findAllByIds(List<Long> courseIds) {
+        return repository.findAllByIdIn(courseIds);
+    }
 
     @Override
     public List<Course> findAllCourse() {
@@ -47,6 +51,6 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Course> findAllByTeacherId(Long teacherId) {
-        return null;
+        return repository.findAllByTeacherId(teacherId);
     }
 }

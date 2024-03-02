@@ -6,10 +6,12 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import ru.firstapp.dto.TeacherDTO;
 import ru.firstapp.model.Course;
 import ru.firstapp.model.Teacher;
 import ru.firstapp.repository.CourseRepository;
 import ru.firstapp.repository.TeacherRepository;
+import ru.firstapp.service.CourseService;
 import ru.firstapp.service.TeacherService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +25,9 @@ import java.util.List;
 public class TeacherServiceImpl implements TeacherService {
     private final TeacherRepository repository;
     private final CourseRepository courseRepository;
+    private final CourseService courseService;
     private static final Logger log = LoggerFactory.getLogger(TeacherServiceImpl.class);
+
 
     @Override
     public List<Teacher> findAllTeacher() {

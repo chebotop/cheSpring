@@ -8,13 +8,12 @@ import java.util.List;
 
 @Data
 @Accessors(chain = true)
-public class TeacherDTO {
+public class StudentDTO {
     private Long id;
     private String firstName;
     private String lastName;
     private String email;
     private LocalDate dateOfBirth;
-    // Можно добавить список ID курсов, которые ведет учитель
-    private List<Long> listCourseIds;
-    private Long courseIds;
+        // Можно добавить список ID курсов, на которые записан студент
+    private List<Long> courseIds;
 }
