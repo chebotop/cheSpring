@@ -6,16 +6,27 @@ import ru.firstapp.model.Student;
 import ru.firstapp.repository.InMemoryStudentDAO;
 import ru.firstapp.service.StudentService;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class InMemoryStudentServiceImpl implements StudentService {
     private final InMemoryStudentDAO repository;
+
+
+
     @Override
     public List<Student> findAllStudent() {
         return repository.findAllStudent();
     }
+
+    // todo затычка
+    @Override
+    public List<Student> findAllById(List<Long> studentIds) {
+        return Collections.emptyList();
+    }
+
     @Override
     public Student saveStudent(Student student) {
         return repository.saveStudent(student);

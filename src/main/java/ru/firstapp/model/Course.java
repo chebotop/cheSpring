@@ -3,8 +3,9 @@ package ru.firstapp.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import java.util.Set;
 
-import java.util.List;
+// через ломбок добавить геттеры
 
 @Data
 @Entity
@@ -16,7 +17,16 @@ public class Course {
     private String title; // Название курса
     private String description; // Описание курса
 
-    @ManyToOne // связь курса с преподавателем
-    @JoinColumn(name="teacher_id") // внешний ключ для преподавателя
+    @ManyToOne
+    @JoinColumn(name = "teacher_id") // Внешний ключ для связи с преподавателем
     private Teacher teacher;
+
+    @ManyToMany
+    @JsonIgnore
+    @JoinTable(
+            name = "student_course",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id")
+    )
+    private Set<Student> students; // Используем Set для предотвращения дубликатов
 }

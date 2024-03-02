@@ -15,6 +15,12 @@ import java.util.List;
 @Primary
 public class CourseServiceImpl implements CourseService {
     private final CourseRepository repository;
+
+    @Override
+    public Course findCourseById(Long id) {
+        return repository.findCourseById(id);
+    }
+
     @Override
     public List<Course> findAllCourse() {
         return repository.findAll();
@@ -25,10 +31,8 @@ public class CourseServiceImpl implements CourseService {
         return repository.save(course);
     }
 
-    @Override
-    public Course findByTitle(String title) {
-        return repository.findCourseByTitle(title);
-    }
+
+
 
     @Override
     public Course updateCourse(Course course) {
@@ -39,5 +43,10 @@ public class CourseServiceImpl implements CourseService {
     @Transactional
     public void deleteCourse(String title) {
         repository.deleteByTitle(title);
+    }
+
+    @Override
+    public List<Course> findAllByTeacherId(Long teacherId) {
+        return null;
     }
 }

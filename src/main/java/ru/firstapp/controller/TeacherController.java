@@ -31,6 +31,12 @@ public class TeacherController {
         return service.findByEmail(email);
     }
 
+    @GetMapping("/{id}")
+    public Teacher findById(@PathVariable Long id) { // имя получаемой переменной и название в фигурных скобках совпадают
+        return service.findById(id);
+    }
+
+
     // @RequestBody реализует JSON
     @PutMapping("update_teacher")
     public Teacher updateTeacher(@RequestBody Teacher teacher) {
