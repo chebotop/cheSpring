@@ -1,5 +1,6 @@
 package ru.firstapp.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -23,6 +24,7 @@ public class Teacher {
     private int age;
 
     @OneToMany(mappedBy="teacher")
+    @JsonManagedReference
     private List<Course> courses;
 
     public int getAge() {

@@ -1,5 +1,6 @@
 package ru.firstapp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -19,6 +20,7 @@ public class Course {
 
     @ManyToOne
     @JoinColumn(name = "teacher_id") // Внешний ключ для связи с преподавателем
+    @JsonBackReference
     private Teacher teacher;
 
     @ManyToMany
