@@ -18,8 +18,8 @@ public class StudentController {
         return service.findAllStudent();
     }
 
-    @PostMapping("save_student")// сделать метод POST
     // чтобы string могла реализовать указанный обьект, добавим @RequestBody
+    @PostMapping("save_student")// сделать метод POST
     public String saveStudent(@RequestBody Student student) {
         service.saveStudent(student);
         return "Student successfully saved";
@@ -31,8 +31,9 @@ public class StudentController {
         return service.findByEmail(email);
     }
 
+    // @RequestBody реализует JSON
     @PutMapping("update_student")
-    public Student updateStudent(Student student) {
+    public Student updateStudent(@RequestBody Student student) {
         return service.updateStudent(student);
     }
 

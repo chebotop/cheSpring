@@ -1,3 +1,17 @@
-spring.datasource.url=jdbc:postgresql://185.240.103.64:5432/db_spring
-spring.datasource.username=spring
-spring.datasource.password=8619204
+spring:
+  datasource:
+    url: jdbc:postgresql://185.240.103.64:5432/db_spring
+    username: spring
+    password: 8619204
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+

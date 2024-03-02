@@ -48,19 +48,7 @@ public class Task1Impl implements IStringRowsListSorter {
         try {
         // Пример вводных данных
      List<String[]> rows = Task1RealDataTest.fetchData();
-        // Instead of database query:
-//        List<String[]> rows = Arrays.asList(
-//                new String[]{"Иванов", "100000", "отдел 20"},
-//                new String[]{"Петров", null, ""},
-//                new String[]{"Сидоров", "85000", null},
-//                new String[]{"Кузнецов", "", "отдел 20"},
-//                new String[]{"Тимохин", "120000", "отдел 20"},
-//                new String[]{"Михайлов", "95000", "отдел 3"},
-//                new String[]{"Смирнов", "70000", "отдел 3"},
-//                new String[]{"Иваницкий", "110000", "отдел 3"},
-//                new String[]{"Бонд", "", "отдел 007"},
-//                new String[]{"Хорошев", "65000", "отдел К"}
-//        );
+
         /* Сортировка по второму аргументу в методе sort, т.е. столбцу.
          * 0 - по фамилиям, 1 - по зарплате,
          * 2 - по отделу, где строка содержит и цифровые и нецифровые символы

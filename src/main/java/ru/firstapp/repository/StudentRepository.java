@@ -1,2 +1,10 @@
-package ru.firstapp.repository;public class StudentRepository {
+package ru.firstapp.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import ru.firstapp.model.Student;
+
+
+public interface StudentRepository extends JpaRepository<Student, Long> {
+    void deleteByEmail(String email);
+    Student findStudentByEmail(String email);
 }
