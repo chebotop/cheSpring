@@ -1,5 +1,6 @@
 package ru.firstapp.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,28 +33,38 @@ public class CourseController {
     }
 
     // чтобы string могла реализовать указанный обьект, добавим @RequestBody
-    @PostMapping("save_course")// сделать метод POST
-    public ResponseEntity<CourseDTO> saveCourse(@RequestBody CourseDTO courseDTO) {
+    @PostMapping("save_course")
+    public ResponseEntity<?> saveCourse(@RequestBody CourseDTO courseDTO) {
+        // Использование метода convertToEntity для преобразования DTO в сущность
         Course course = convertToEntity(courseDTO);
         Course savedCourse = courseService.saveCourse(course);
-        return new ResponseEntity<>(convertToDTO(savedCourse), HttpStatus.CREATED);
+        // Преобразование сохраненной сущности обратно в DTO для ответа
+        CourseDTO savedCourseDTO = convertToDTO(savedCourse);
+        return new ResponseEntity<>(savedCourseDTO, HttpStatus.CREATED);
     }
 
+    // Используйте этот метод для преобразования CourseDTO в сущность Course
     private Course convertToEntity(CourseDTO courseDTO) {
         Course course = new Course();
         course.setTitle(courseDTO.getTitle());
         course.setDescription(courseDTO.getDescription());
-
         if (courseDTO.getTeacherId() != null) {
+            // Логика поиска и установки учителя
             Teacher teacher = teacherService.findById(courseDTO.getTeacherId());
-            course.setTeacher(teacher);
+            if (teacher != null) {
+                course.setTeacher(teacher);
+            } else {
+                throw new EntityNotFoundException("Teacher not found with id: " + courseDTO.getTeacherId());
+            }
         }
         if (courseDTO.getStudentIds() != null && !courseDTO.getStudentIds().isEmpty()) {
+            // Логика поиска и установки студентов
             List<Student> students = studentService.findAllById(courseDTO.getStudentIds());
             course.setStudents(new HashSet<>(students));
         }
         return course;
     }
+
     private CourseDTO convertToDTO(Course course) {
         CourseDTO courseDTO = new CourseDTO()
                 .setId(course.getId())
