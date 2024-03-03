@@ -10,7 +10,6 @@ import java.util.List;
 @Setter
 @Accessors(chain = true) // Включаем цепочку (chaining) для установки значений через методы-сеттеры
 public class CourseUpdateDTO {
-    private Long id;
     private String title;
     private String description;
     private String email;

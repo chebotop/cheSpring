@@ -36,9 +36,9 @@ public class TeacherController {
         TeacherDTO savedTeacherDTO = convertToDTO(savedTeacher);
 
         // Если есть courseIds, установите связь с курсами
-        if (teacherDTO.getCourseIds() != null && !teacherDTO.getListCourseIds().isEmpty()) {
+        if (teacherDTO.getId() != null && !teacherDTO.getListCourseIds().isEmpty()) {
             // Находим курсы по ID
-            List<Course> courses = courseService.findAllByTeacherId(teacherDTO.getCourseIds());
+            List<Course> courses = courseService.findAllByTeacherId(teacherDTO.getId());
             // Устанавливаем курсы для учителя
             teacher.setCourses(courses);
         }

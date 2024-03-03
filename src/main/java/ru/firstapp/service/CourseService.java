@@ -14,7 +14,7 @@ public interface CourseService {
     List<Course> findAllByTeacherId(Long teacherId);
 
     // новый метод для назначения студента курсу
-    List<Course> findAllByStudentId(Long studentId);
-    List<Course> findAllByIds(List<Long> courseIds);
+//    List<Course> findAllByStudentId(Long studentId);
+    List<Course> findAllById(List<Long> courseIds);
 
 }

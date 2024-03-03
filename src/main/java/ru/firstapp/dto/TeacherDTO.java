@@ -16,5 +16,4 @@ public class TeacherDTO {
     private LocalDate dateOfBirth;
     // Можно добавить список ID курсов, которые ведет учитель
     private List<Long> listCourseIds;
-    private Long courseIds;
 }

@@ -1,15 +1,32 @@
 package ru.firstapp.mappers;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 import ru.firstapp.dto.CourseDTO;
 import ru.firstapp.model.Course;
+import ru.firstapp.model.Student;
+import ru.firstapp.service.StudentService;
 
-@Mapper(componentModel = "spring")
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Mapper(componentModel = "spring", uses = {StudentMapper.class})
 public interface CourseMapper {
-    @Mapping(source = "teacher.id", target = "teacherId")
+
+    @Mapping(target = "teacherId", source = "teacher.id")
+    @Mapping(target = "studentIds", ignore = true)
     CourseDTO toDTO(Course course);
 
-    @Mapping(source = "teacherId", target = "teacher.id")
+    @AfterMapping
+    default void fillStudentIds(@MappingTarget CourseDTO courseDTO, Course course, @Context StudentService studentService) {
+        List<Long> studentIds = studentService.findAllStudentsByCourseId(course.getId())
+                .stream()
+                .map(Student::getId)
+                .collect(Collectors.toList());
+        courseDTO.setStudentIds(studentIds);
+    }
+
+    @Mapping(target = "teacher", ignore=true)
+    @Mapping(target = "students", ignore=true)
     Course fromDTO(CourseDTO courseDTO);
 }
+

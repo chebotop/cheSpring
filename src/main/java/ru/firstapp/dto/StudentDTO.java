@@ -14,7 +14,6 @@ public class StudentDTO {
     private String lastName;
     private String email;
     private LocalDate dateOfBirth;
-        // Можно добавить список ID курсов, на которые записан студент
+
     private List<Long> courseIds;
-    private
 }

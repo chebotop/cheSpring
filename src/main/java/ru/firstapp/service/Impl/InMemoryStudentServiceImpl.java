@@ -23,7 +23,7 @@ public class InMemoryStudentServiceImpl implements StudentService {
 
     // todo затычка
     @Override
-    public List<Student> findAllById(List<Long> studentIds) {
+    public List<Student> findAllStudentsByCourseId(Long studentIds) {
         return Collections.emptyList();
     }
 

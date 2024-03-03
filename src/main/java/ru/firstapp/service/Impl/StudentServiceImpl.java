@@ -20,10 +20,6 @@ public class StudentServiceImpl implements StudentService {
         return repository.findAll();
     }
 
-    @Override
-    public List<Student> findAllById(List<Long> studentIds) {
-        return null;
-    }
 
     @Override
     public Student saveStudent(Student student) {
@@ -45,4 +41,11 @@ public class StudentServiceImpl implements StudentService {
     public void deleteStudent(String email) {
         repository.deleteByEmail(email);
     }
+
+
+    @Override
+    public List<Student> findAllStudentsByCourseId(Long courseId) { // поиск студентов по курсу
+        return repository.findAllStudentsByCourseId(courseId);
+    }
+
 }

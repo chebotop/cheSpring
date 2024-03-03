@@ -1,6 +1,5 @@
 package ru.firstapp.controller;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +16,6 @@ import ru.firstapp.service.TeacherService;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController // Определяет класс как контроллер, где каждый метод возвращает объект домена вместо представления.
 @RequestMapping("/api/v1/courses") // Указывает базовый URL для всех методов в контроллере.
@@ -57,7 +55,7 @@ public class CourseController {
 
     // @RequestBody реализует JSON
     @PutMapping("/update_course/{courseId}")
-    public ResponseEntity<CourseDTO> updateCourse(@PathVariable Long courseId, @RequestBody CourseUpdateDTO courseDTO) {
+    public ResponseEntity<?> updateCourse(@PathVariable Long courseId, @RequestBody CourseUpdateDTO courseDTO) {
         Course course = courseService.findCourseById(courseId);
             if (course == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course not found");
@@ -67,14 +65,14 @@ public class CourseController {
 
         if (courseDTO.getTeacherId() != null) {
             Teacher teacher = teacherService.findById(courseDTO.getTeacherId());
-            if (teacher == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Teacher not found");
-            } else {
+            if (teacher != null) {
                 course.setTeacher(teacher);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Teacher not found");
             }
         }
         if (courseDTO.getStudentIds() != null && !courseDTO.getStudentIds().isEmpty()) {
-            List<Student> students = studentService.findAllById(courseDTO.getStudentIds());
+            List<Student> students = studentService.findAllStudentsByCourseId(courseDTO.getStudentId());
             if (students.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("One or more students not found");
             }
@@ -82,7 +80,8 @@ public class CourseController {
         }
 
         Course updatedCourse = courseService.saveCourse(course);
-        return ResponseEntity.ok(updatedCourse);
+        CourseDTO updatedCourseDTO = courseMapper.toDTO(updatedCourse);
+        return ResponseEntity.ok(updatedCourseDTO);
     }
 
 
