@@ -73,8 +73,16 @@
 			<version>6.1.4</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.mapstruct/mapstruct -->
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>1.5.5.Final</version>
+		</dependency>
 
-    </dependencies>
+
+
+	</dependencies>
 
 	<build>
 		<plugins>

@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.firstapp.dto.CourseDTO;
 import ru.firstapp.dto.CourseUpdateDTO;
+import ru.firstapp.mappers.CourseMapper;
 import ru.firstapp.model.Course;
 import ru.firstapp.model.Student;
 import ru.firstapp.model.Teacher;
@@ -23,6 +24,8 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class CourseController {
     private final CourseService courseService;
+    private final CourseMapper courseMapper;
+
     private final TeacherService teacherService;
     private final StudentService studentService;
 
@@ -34,54 +37,13 @@ public class CourseController {
 
     // чтобы string могла реализовать указанный обьект, добавим @RequestBody
     @PostMapping("save_course")
-    public ResponseEntity<?> saveCourse(@RequestBody CourseDTO courseDTO) {
+    public ResponseEntity<CourseDTO> saveCourse(@RequestBody CourseDTO courseDTO) {
         // Использование метода convertToEntity для преобразования DTO в сущность
-        Course course = convertToEntity(courseDTO);
+        Course course = courseMapper.fromDTO(courseDTO);
         Course savedCourse = courseService.saveCourse(course);
-        // Преобразование сохраненной сущности обратно в DTO для ответа
-        CourseDTO savedCourseDTO = convertToDTO(savedCourse);
-        return new ResponseEntity<>(savedCourseDTO, HttpStatus.CREATED);
+        return new ResponseEntity<>(courseMapper.toDTO(savedCourse), HttpStatus.CREATED);
     }
 
-    // Используйте этот метод для преобразования CourseDTO в сущность Course
-    private Course convertToEntity(CourseDTO courseDTO) {
-        Course course = new Course();
-        course.setTitle(courseDTO.getTitle());
-        course.setDescription(courseDTO.getDescription());
-        if (courseDTO.getTeacherId() != null) {
-            // Логика поиска и установки учителя
-            Teacher teacher = teacherService.findById(courseDTO.getTeacherId());
-            if (teacher != null) {
-                course.setTeacher(teacher);
-            } else {
-                throw new EntityNotFoundException("Teacher not found with id: " + courseDTO.getTeacherId());
-            }
-        }
-        if (courseDTO.getStudentIds() != null && !courseDTO.getStudentIds().isEmpty()) {
-            // Логика поиска и установки студентов
-            List<Student> students = studentService.findAllById(courseDTO.getStudentIds());
-            course.setStudents(new HashSet<>(students));
-        }
-        return course;
-    }
-
-    private CourseDTO convertToDTO(Course course) {
-        CourseDTO courseDTO = new CourseDTO()
-                .setId(course.getId())
-                .setTitle(course.getTitle())
-                .setDescription(course.getDescription())
-                .setTeacherId(course.getTeacher() != null ? course.getTeacher().getId() : null);
-
-        // Добавляем логику для заполнения studentIds
-        if (course.getStudents() != null && !course.getStudents().isEmpty()) {
-            List<Long> studentIds = course.getStudents().stream()
-                    .map(Student::getId)
-                    .collect(Collectors.toList());
-            courseDTO.setStudentIds(studentIds);
-        }
-
-        return courseDTO;
-    }
         @GetMapping("/{id}")                                                                                                                                                                    // используем имя курса для получения почты
     // используем аннотацию для извлечения переменной из URL-запроса и передачи в метод контроллера как параметра
     public ResponseEntity<Course> getCourseById(@PathVariable Long id) { // имя получаемой переменной и название в фигурных скобках совпадают
@@ -95,7 +57,7 @@ public class CourseController {
 
     // @RequestBody реализует JSON
     @PutMapping("/update_course/{courseId}")
-    public ResponseEntity<?> updateCourse(@PathVariable Long courseId, @RequestBody CourseUpdateDTO courseDTO) {
+    public ResponseEntity<CourseDTO> updateCourse(@PathVariable Long courseId, @RequestBody CourseUpdateDTO courseDTO) {
         Course course = courseService.findCourseById(courseId);
             if (course == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course not found");

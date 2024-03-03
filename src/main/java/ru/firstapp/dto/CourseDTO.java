@@ -1,13 +1,11 @@
 package ru.firstapp.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @Accessors(chain = true) // Включаем цепочку (chaining) для установки значений через методы-сеттеры
 public class CourseDTO {
     private Long id;

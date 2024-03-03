@@ -12,6 +12,9 @@ public interface CourseService {
     Course updateCourse(Course course);
     void deleteCourse(String title);
     List<Course> findAllByTeacherId(Long teacherId);
+
+    // новый метод для назначения студента курсу
+    List<Course> findAllByStudentId(Long studentId);
     List<Course> findAllByIds(List<Long> courseIds);
 
 }
