@@ -1,4 +1,4 @@
-package ru.firstapp.dao;
+package ru.firstapp.service;
 
 import jakarta.transaction.HeuristicMixedException;
 import jakarta.transaction.HeuristicRollbackException;
@@ -7,12 +7,12 @@ import jakarta.transaction.SystemException;
 
 import java.util.List;
 
-public interface GenericDao<T, ID> {
-    T findById(ID id);
+public interface GenericDao<T, Id> {
+    T findById(Id id);
     List<T> findAll();
     T save(T entity) throws SystemException, HeuristicRollbackException, HeuristicMixedException, RollbackException;
     void delete(T entity) throws SystemException, HeuristicRollbackException, HeuristicMixedException, RollbackException;
-    void deleteById(ID id) throws SystemException, HeuristicRollbackException, HeuristicMixedException, RollbackException;
+    void deleteById(Id id) throws SystemException, HeuristicRollbackException, HeuristicMixedException, RollbackException;
 
 
 }
