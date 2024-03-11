@@ -1,6 +1,8 @@
 package ru.firstapp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -22,6 +24,7 @@ public class Student {
     private String email;
     @Transient
     private int age;
+    private String group;
     @ManyToMany
     @JsonIgnore
     @JoinTable(
@@ -30,6 +33,16 @@ public class Student {
             inverseJoinColumns = @JoinColumn(name = "course_id")
     )
     private List<Course> courses;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "person_id")
+    @JsonBackReference
+    private Person person;
+
+    @ManyToOne
+    @JoinColumn(name="record_book_id")
+    @JsonManagedReference
+    private RecordBook recordBook;
 
     public int getAge() {
         return Period.between(dateOfBirth, LocalDate.now()).getYears();

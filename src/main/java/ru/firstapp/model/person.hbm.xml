@@ -1,0 +1,35 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <!-- Определение класса Person -->
+    <class name="ru.firstapp.model.Person" table="person">
+            <!-- Определение первичного ключа и сопоставление с колонкой ID;
+                 Использование генератора для уникальных id-->
+            <id name="id" type="java.lang.Long">
+                <column name="ID" />
+                <generator class="increment"/>
+            </id>
+        <!-- Определение свойства passportSerial -->
+        <property name="passportSerial" type="java.lang.Integer">
+            <!-- Сопоставление с колонкой PASSPORT_SERIA -->
+            <column name="PASSPORT_SERIA" unique="true"/>
+        </property>
+        <!-- Определение свойства passportNumber -->
+        <property name="passportNumber" type="java.lang.Integer">
+            <!-- Сопоставление с колонкой PASSPORT_NUMBER -->
+            <column name="PASSPORT_NUMBER" unique="true"/>
+        </property>
+        <!-- Определение свойств firstName middleName lastName -->
+        <property name="firstName" type="string">
+            <column name="FIRST_NAME"/>
+        </property>
+        <property name="middleName" type="string">
+            <column name="MIDDLE_NAME"/>
+        </property>
+        <property name="lastName" type="string">
+            <column name="LAST_NAME"/>
+        </property>
+    </class>
+</hibernate-mapping>

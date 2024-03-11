@@ -37,7 +37,6 @@ public class StudentController {
         return studentService.findByEmail(email);
     }
 
-    //todo реализуем обновление данных студента
     @PutMapping("/update_student/{email}")
     public ResponseEntity<?> updateStudent(@PathVariable String email, @RequestBody StudentUpdateDTO studentUpdateDTO) {
         Student student = studentService.findByEmail(email);
@@ -47,11 +46,13 @@ public class StudentController {
         student.setFirstName(studentUpdateDTO.getFirstName());
         student.setLastName(studentUpdateDTO.getLastName());
         student.setEmail(studentUpdateDTO.getEmail());
+        Student updatedStudent = studentService.updateStudent(student);
+        return ResponseEntity.ok(updatedStudent);
     }
         @DeleteMapping("delete_student/{email}")
         public void deleteStudent (@PathVariable String email){
             studentService.deleteStudent(email);
         }
     }
-}
+
 
