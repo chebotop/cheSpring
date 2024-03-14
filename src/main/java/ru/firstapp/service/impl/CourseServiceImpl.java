@@ -1,4 +1,4 @@
-package ru.firstapp.service.Impl;
+package ru.firstapp.service.impl;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;

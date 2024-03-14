@@ -12,12 +12,12 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "person",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"passportSerial", "passportNumber"}))
 public class Person {
     @Id
     private Long id;
-    @Column(unique = true)
     private Integer passportSerial;
-    @Column(unique = true)
     private Integer passportNumber;
     private String firstName;
     private String middleName;

@@ -1,4 +1,4 @@
-package ru.firstapp.service.Impl;
+package ru.firstapp.service.impl;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import ru.firstapp.dto.TeacherDTO;
 import ru.firstapp.model.Course;
 import ru.firstapp.model.Teacher;
 import ru.firstapp.repository.CourseRepository;

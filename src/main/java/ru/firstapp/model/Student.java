@@ -34,7 +34,7 @@ public class Student {
     )
     private List<Course> courses;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JoinColumn(name = "person_id")
     @JsonBackReference
     private Person person;

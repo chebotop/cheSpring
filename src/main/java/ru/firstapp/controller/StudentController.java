@@ -11,7 +11,6 @@ import ru.firstapp.model.Student;
 import ru.firstapp.service.StudentService;
 
 import java.util.List;
-
 @RestController
 @RequestMapping("/api/v1/students")
 @AllArgsConstructor
@@ -19,29 +18,32 @@ public class StudentController {
     private final StudentService studentService;
 
     @GetMapping
-    public List<Student> findAllStudent() {
-        return studentService.findAllStudent();
+    public ResponseEntity<List<Student>> findAllStudent() {
+        List<Student> students = studentService.findAllStudent();
+        return ResponseEntity.ok(students);
     }
 
-    // чтобы string могла реализовать указанный обьект, добавим @RequestBody
-    @PostMapping("save_student")// сделать метод POST
-    public String saveStudent(@RequestBody Student student) {
-        studentService.saveStudent(student);
-        return "Student successfully saved";
+    @PostMapping // POST подразумевает создание, поэтому "save_student" в URL не нужен
+    public ResponseEntity<Student> saveStudent(@RequestBody Student student) {
+        Student savedStudent = studentService.saveStudent(student);
+        return new ResponseEntity<>(savedStudent, HttpStatus.CREATED);
     }
 
-
-    @GetMapping("/{email}")    // используем URL адрес для получения почты
-    // используем аннотацию для извлечения переменной из URL-запроса и передачи в метод контроллера как параметра
-    public Student findByEmail(@PathVariable String email) { // имя получаемой переменной и название в фигурных скобках совпадают
-        return studentService.findByEmail(email);
+    @GetMapping("/{email}")
+    public ResponseEntity<Student> findByEmail(@PathVariable String email) {
+        Student student = studentService.findByEmail(email);
+        if (student != null) {
+            return ResponseEntity.ok(student);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @PutMapping("/update_student/{email}")
-    public ResponseEntity<?> updateStudent(@PathVariable String email, @RequestBody StudentUpdateDTO studentUpdateDTO) {
+    @PutMapping("/{email}")
+    public ResponseEntity<Student> updateStudent(@PathVariable String email, @RequestBody StudentUpdateDTO studentUpdateDTO) {
         Student student = studentService.findByEmail(email);
         if (student == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Student not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
         student.setFirstName(studentUpdateDTO.getFirstName());
         student.setLastName(studentUpdateDTO.getLastName());
@@ -49,10 +51,14 @@ public class StudentController {
         Student updatedStudent = studentService.updateStudent(student);
         return ResponseEntity.ok(updatedStudent);
     }
-        @DeleteMapping("delete_student/{email}")
-        public void deleteStudent (@PathVariable String email){
-            studentService.deleteStudent(email);
+
+    @DeleteMapping("/{email}")
+    public ResponseEntity<?> deleteStudent(@PathVariable String email) {
+        Student student = studentService.findByEmail(email);
+        if (student == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+        studentService.deleteStudent(email);
+        return ResponseEntity.ok().build();
     }
-
-
+}

@@ -1,10 +1,11 @@
-package ru.firstapp.service.Impl;
+package ru.firstapp.dao.impl;
 
 import jakarta.transaction.*;
+import lombok.Setter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
-import ru.firstapp.service.StudentDAO;
+import ru.firstapp.dao.StudentDao;
 import ru.firstapp.model.Student;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,14 +14,11 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+@Setter
 @Repository
-public class StudentDAOImpl implements StudentDAO {
-    private static final Logger logger = LoggerFactory.getLogger(StudentDAOImpl.class);
+public class StudentDaoImpl implements StudentDao {
+    private static final Logger logger = LoggerFactory.getLogger(StudentDaoImpl.class);
     private SessionFactory sessionFactory;
-
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
 
     /**
      * Находит студента по идентификатору.
