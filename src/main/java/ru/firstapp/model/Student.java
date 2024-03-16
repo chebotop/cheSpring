@@ -17,8 +17,6 @@ public class Student {
     @Id
     @GeneratedValue
     private Long id;
-    private String firstName;
-    private String lastName;
     private LocalDate dateOfBirth;
     @Column(unique = true)
     private String email;
@@ -34,12 +32,12 @@ public class Student {
     )
     private List<Course> courses;
 
-    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "person_id")
     @JsonBackReference
     private Person person;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER) // NEED EAGER
     @JoinColumn(name="record_book_id")
     @JsonManagedReference
     private RecordBook recordBook;

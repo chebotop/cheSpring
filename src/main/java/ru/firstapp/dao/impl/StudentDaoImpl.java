@@ -1,11 +1,14 @@
 package ru.firstapp.dao.impl;
 
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.*;
 import lombok.Setter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import ru.firstapp.dao.StudentDao;
+import ru.firstapp.model.RecordBook;
 import ru.firstapp.model.Student;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 
 import java.util.List;
+import java.util.Queue;
 
 @Setter
 @Repository
@@ -52,6 +56,7 @@ public class StudentDaoImpl implements StudentDao {
         session.persist(entity);
         return entity;
     }
+
 
     /**
      * Удаляет студента из базы данных.

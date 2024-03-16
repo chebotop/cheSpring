@@ -2,18 +2,13 @@ package ru.firstapp.dao.impl;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.*;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import ru.firstapp.dao.PersonDao;
 import ru.firstapp.model.Person;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-
 
 import java.util.List;
 
@@ -58,7 +53,6 @@ public class PersonDaoImpl implements PersonDao {
         } else {
             return entityManager.merge(entity);
         }
-
     }
 
     /**

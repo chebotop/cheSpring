@@ -36,7 +36,7 @@ code field should be unique
 
 Object 3 should be named Student
 1. id Long
-2. recordBook obj
+2. recordBook objS
 3. person obj
 4. group String
 

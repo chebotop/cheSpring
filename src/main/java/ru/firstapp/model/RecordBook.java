@@ -14,11 +14,12 @@ import java.util.List;
 @NoArgsConstructor
 public class RecordBook {
     @Id
+    @GeneratedValue
     private Long id;
     @Column(unique = true)
     private Long code;
 
-    @OneToMany(mappedBy = "recordBook")
+    @OneToOne(mappedBy = "recordBook", fetch = FetchType.EAGER) // надо жадно загрузить студента
     @JsonBackReference
-    private List<Student> students;
+    private Student student;
 }

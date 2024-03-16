@@ -45,8 +45,6 @@ public class StudentController {
         if (student == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        student.setFirstName(studentUpdateDTO.getFirstName());
-        student.setLastName(studentUpdateDTO.getLastName());
         student.setEmail(studentUpdateDTO.getEmail());
         Student updatedStudent = studentService.updateStudent(student);
         return ResponseEntity.ok(updatedStudent);

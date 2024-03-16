@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
         uniqueConstraints = @UniqueConstraint(columnNames = {"passportSerial", "passportNumber"}))
 public class Person {
     @Id
+    @GeneratedValue
     private Long id;
     private Integer passportSerial;
     private Integer passportNumber;
@@ -26,6 +27,4 @@ public class Person {
     @OneToOne(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     @JsonManagedReference
     private Student student;
-
-
 }

@@ -1,0 +1,14 @@
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd">
+<body>
+<h1>Edit Test Project</h1>
+<form t:id="editForm">
+    <input t:type="textfield" t:id="code" value="project.code"/>
+    <input t:type="textfield" t:id="title" value="project.title"/>
+    <input t:type="textfield" t:id="description" value="project.description"/>
+    <input t:type="datefield" t:id="createDate" value="project.createDate"/>
+
+    <input type="submit" value="Save"/>
+    <t:pagelink page="TestProjectPage">Cancel</t:pagelink>
+</form>
+</body>
+</html>

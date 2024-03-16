@@ -1,0 +1,15 @@
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd">
+<body>
+<h1>Test Project Details</h1>
+<p>ID: ${project.id}</p>
+<p>Code: ${project.code}</p>
+<p>Title: ${project.title}</p>
+<p>Description: ${project.description}</p>
+<p>Create Date: ${project.createDate}</p>
+
+<t:pagelink page="TestProjectEditPage">
+    <t:parameter name="project" value="project"/>
+    Edit
+</t:pagelink>
+</body>
+</html>
