@@ -11,6 +11,5 @@ public interface GenericDao<T, Id> {
     T findById(Id id);
     List<T> findAll();
     T save(T entity);
-    void delete(T entity);
     void deleteById(Id id);
 }

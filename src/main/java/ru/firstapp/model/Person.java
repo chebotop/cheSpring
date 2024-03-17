@@ -1,30 +1,48 @@
 package ru.firstapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/* честное слово, так ведь приятно. просто забить аннотации типа Data, AllArgsConstructor, Column
-* нежели прописывать бойлерплейты */
+import java.io.Serializable;
+
+
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "person",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"passportSerial", "passportNumber"}))
+@Table(name = "person")
 public class Person {
     @Id
     @GeneratedValue
     private Long id;
-    private Integer passportSerial;
-    private Integer passportNumber;
+
+    @Embedded
+    private Passport passport;
+
     private String firstName;
     private String middleName;
     private String lastName;
 
-    @OneToOne(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
-    @JsonManagedReference
+    @Embeddable
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Passport implements Serializable {
+        @Column(name = "passport_seria")
+        private Integer passportSeria;
+
+        @Column(name = "passport_number")
+        private Integer passportNumber;
+    }
+
+    @OneToOne(mappedBy = "person", cascade = {CascadeType.REMOVE, CascadeType.MERGE}, fetch = FetchType.LAZY, optional = false)
+    @JsonIgnore
     private Student student;
+
+
+
 }

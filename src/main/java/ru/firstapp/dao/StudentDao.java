@@ -11,8 +11,8 @@ import java.util.List;
 public interface StudentDao extends GenericDao<Student, Long> {
 
     Student findById(Long aLong);
+    Student findByPersonId(Long personId);
     List<Student> findAll();
     Student save(Student entity);
-    void delete(Student entity);
     void deleteById(Long aLong);
 }

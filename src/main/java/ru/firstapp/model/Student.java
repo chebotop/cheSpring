@@ -17,32 +17,16 @@ public class Student {
     @Id
     @GeneratedValue
     private Long id;
-    private LocalDate dateOfBirth;
-    @Column(unique = true)
-    private String email;
-    @Transient
-    private int age;
-    private String group;
-    @ManyToMany
-    @JsonIgnore
-    @JoinTable(
-            name = "student_course",
-            joinColumns = @JoinColumn(name = "student_id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id")
-    )
-    private List<Course> courses;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     @JoinColumn(name = "person_id")
-    @JsonBackReference
+    @JsonIgnore
     private Person person;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER) // NEED EAGER
+    @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER) // NEED EAGER
     @JoinColumn(name="record_book_id")
-    @JsonManagedReference
+    @JsonIgnore
     private RecordBook recordBook;
 
-    public int getAge() {
-        return Period.between(dateOfBirth, LocalDate.now()).getYears();
-    }
+
 }

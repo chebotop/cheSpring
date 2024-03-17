@@ -1,6 +1,7 @@
 package ru.firstapp.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,7 +20,7 @@ public class RecordBook {
     @Column(unique = true)
     private Long code;
 
-    @OneToOne(mappedBy = "recordBook", fetch = FetchType.EAGER) // надо жадно загрузить студента
-    @JsonBackReference
+    @OneToOne(mappedBy = "recordBook", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER) // надо жадно загрузить студента
+    @JsonIgnore
     private Student student;
 }

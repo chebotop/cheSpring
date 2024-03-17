@@ -12,8 +12,6 @@ spring:
     show-sql: true
     properties:
       hibernate:
-        mapping_resources: ru/firstapp/model/student.hbm.xml,
-                           ru/firstapp/model/person.hbm.xml
         format_sql: true
 
 
